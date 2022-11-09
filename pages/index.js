@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 import { StyledHeader } from "../src/components/Header";
-import { StyledFavorites } from "../src/components/Favorite";
+import Favorite from "../src/components/Favorite";
 import Footer from "../src/components/Footer";
 
 export default function HomePage() {
@@ -86,35 +86,5 @@ function Timeline({searchValue, ...props}) {
                 )
             })}
         </StyledTimeline>
-    )
-}
-
-function Favorite (props) {
-    const favoriteNames = Object.keys(props.favorites);
-
-    return(
-        <StyledFavorites>
-            {favoriteNames.map((favoriteName) => {
-                const videos = props.favorites[favoriteName];
-                return (
-                    <section>
-                        <h2>
-                            {favoriteName}
-                        </h2>
-                        <div>
-                            {videos.map( (video)=>{
-                                    return(
-                                        <a href={video.url}>
-                                            <img src={video.thumb}/>
-                                            <span>{video.title}</span>
-                                        </a>
-                                    )
-                                }
-                            )}
-                        </div>
-                    </section>
-                )
-            })}
-        </StyledFavorites>
     )
 }

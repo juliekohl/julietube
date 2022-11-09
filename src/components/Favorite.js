@@ -45,3 +45,33 @@ export const StyledFavorites = styled.div`
     }
   }
 `;
+
+export default function Favorite (props) {
+    const favoriteNames = Object.keys(props.favorites);
+
+    return(
+        <StyledFavorites>
+            {favoriteNames.map((favoriteName) => {
+                const videos = props.favorites[favoriteName];
+                return (
+                    <section>
+                        <h2>
+                            {favoriteName}
+                        </h2>
+                        <div>
+                            {videos.map( (video)=>{
+                                    return(
+                                        <a href={video.url}>
+                                            <img src={video.thumb}/>
+                                            <span>{video.title}</span>
+                                        </a>
+                                    )
+                                }
+                            )}
+                        </div>
+                    </section>
+                )
+            })}
+        </StyledFavorites>
+    )
+}

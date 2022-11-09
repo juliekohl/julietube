@@ -130,5 +130,29 @@
         "thumb": "https://img.youtube.com/vi/0JWMVc1CqpA/hqdefault.jpg"
       }
     ]
+  },
+  "favorites":{
+    "favorites": [
+      {
+        "title": "Paulo Silveira",
+        "url": "https://github.com/peas",
+        "thumb": "https://avatars.githubusercontent.com/u/71636?v=4"
+      },
+      {
+        "title": "Mario Souto",
+        "url": "https://github.com/omariosouto",
+        "thumb": "https://avatars.githubusercontent.com/u/13791385?v=4"
+      },
+      {
+        "title": "Filipe Deschamps",
+        "url": "https://github.com/filipedeschamps",
+        "thumb": "https://avatars.githubusercontent.com/u/4248081?v=4"
+      },
+      {
+        "title": "Cesar Kohl",
+        "url": "https://github.com/cesarkohl",
+        "thumb": "https://avatars.githubusercontent.com/u/1817443?v=4"
+      }
+    ]
   }
 }

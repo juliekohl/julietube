@@ -3,8 +3,11 @@ import config from "../config.json";
 import styled from "styled-components";
 import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
+import { StyledHeader } from "../src/components/Header";
+import { StyledFavorites } from "../src/components/Favorite";
+import Footer from "../src/components/Footer";
 
-function HomePage() {
+export default function HomePage() {
     const [valorDoFiltro, setValorDoFiltro] = React.useState("");
 
     return (
@@ -19,28 +22,13 @@ function HomePage() {
                 <Timeline searchValue={valorDoFiltro} playlists={config.playlists}>
                     Conteúdo
                 </Timeline>
+                <Favorite favorites={config.favorites} />
+                <Footer />
             </div>
         </>
     );
 }
 
-export default HomePage
-
-const StyledHeader = styled.div`
-    background-color: ${ ({ theme }) => theme.backgroundLevel1 };
-    img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-    }
-    .user-info {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        width: 100%;
-        padding: 16px 32px;
-    }
-`;
 const StyledBanner = styled.div`
     background-color: blue;
     background-image: url(${({ bg }) => bg});
@@ -53,7 +41,7 @@ function Header() {
         <StyledHeader>
             <StyledBanner bg={config.bg} />
             <section className="user-info">
-                <img src={`https://github.com/${config.github}.png`} />
+                <img src={`https://github.com/${config.github}.png`} alt="profile picture" />
                 <div>
                     <h2>
                         {config.name}
@@ -66,7 +54,6 @@ function Header() {
         </StyledHeader>
     )
 }
-
 
 function Timeline({searchValue, ...props}) {
     const playlistNames = Object.keys(props.playlists);
@@ -99,5 +86,35 @@ function Timeline({searchValue, ...props}) {
                 )
             })}
         </StyledTimeline>
+    )
+}
+
+function Favorite (props) {
+    const favoriteNames = Object.keys(props.favorites);
+
+    return(
+        <StyledFavorites>
+            {favoriteNames.map((favoriteName) => {
+                const videos = props.favorites[favoriteName];
+                return (
+                    <section>
+                        <h2>
+                            {favoriteName}
+                        </h2>
+                        <div>
+                            {videos.map( (video)=>{
+                                    return(
+                                        <a href={video.url}>
+                                            <img src={video.thumb}/>
+                                            <span>{video.title}</span>
+                                        </a>
+                                    )
+                                }
+                            )}
+                        </div>
+                    </section>
+                )
+            })}
+        </StyledFavorites>
     )
 }

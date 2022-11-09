@@ -1,9 +1,8 @@
 import React from "react";
 import config from "../config.json";
-import styled from "styled-components";
 import Menu from "../src/components/Menu";
-import { StyledTimeline } from "../src/components/Timeline";
-import { StyledHeader } from "../src/components/Header";
+import Timeline from "../src/components/Timeline";
+import Header from "../src/components/Header";
 import Favorite from "../src/components/Favorite";
 import Footer from "../src/components/Footer";
 
@@ -27,64 +26,4 @@ export default function HomePage() {
             </div>
         </>
     );
-}
-
-const StyledBanner = styled.div`
-    background-color: blue;
-    background-image: url(${({ bg }) => bg});
-    /* background-image: url(${config.bg}); */
-    height: 230px;
-`;
-
-function Header() {
-    return (
-        <StyledHeader>
-            <StyledBanner bg={config.bg} />
-            <section className="user-info">
-                <img src={`https://github.com/${config.github}.png`} alt="profile picture" />
-                <div>
-                    <h2>
-                        {config.name}
-                    </h2>
-                    <p>
-                        {config.job}
-                    </p>
-                </div>
-            </section>
-        </StyledHeader>
-    )
-}
-
-function Timeline({searchValue, ...props}) {
-    const playlistNames = Object.keys(props.playlists);
-
-    return (
-        <StyledTimeline>
-            {playlistNames.map((playlistName) => {
-                const videos = props.playlists[playlistName];
-                return (
-                    <section key={playlistName}>
-                        <h2>{playlistName}</h2>
-                        <div>
-                            {videos
-                                .filter((video) => {
-                                const titleNormalized = video.title.toLowerCase();
-                                const searchValueNormalized = searchValue.toLowerCase();
-                                return titleNormalized.includes(searchValueNormalized)
-                            }).map((video) => {
-                                return (
-                                    <a key={video.url} href={video.url}>
-                                        <img src={video.thumb} />
-                                        <span>
-                                            {video.title}
-                                        </span>
-                                    </a>
-                                )
-                            })}
-                        </div>
-                    </section>
-                )
-            })}
-        </StyledTimeline>
-    )
 }

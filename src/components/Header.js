@@ -1,7 +1,7 @@
-import config from "config.json";
 import styled from "styled-components";
 
-const StyledHeader = styled.div`
+export const StyledHeader = styled.div`
+    background-color: ${ ({ theme }) => theme.backgroundLevel1 };
     img {
         width: 80px;
         height: 80px;
@@ -16,22 +16,3 @@ const StyledHeader = styled.div`
         padding: 16px 32px;
     }
 `;
-
-function Header() {
-    return (
-        <StyledHeader>
-            {/* <img src="banner" /> */}
-            <section className="user-info">
-                <img src={`https://github.com/${config.github}.png`} />
-                <div>
-                    <h2>
-                        {config.name}
-                    </h2>
-                    <p>
-                        {config.job}
-                    </p>
-                </div>
-            </section>
-        </StyledHeader>
-    )
-}

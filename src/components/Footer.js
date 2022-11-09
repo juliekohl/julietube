@@ -1,16 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledFooter = styled.footer`
-  .footer {
-    text-align: center;
-    margin: 50px 0 50px 0;
-  }
-  .footer p a {
-    color: red;
-  }
-`;
-
 export default function Footer () {
     return (
         <StyledFooter>
@@ -20,3 +10,13 @@ export default function Footer () {
         </StyledFooter>
     );
 };
+
+const StyledFooter = styled.footer`
+  .footer {
+    text-align: center;
+    margin: 50px 0 50px 0;
+  }
+  .footer p a {
+    color: red;
+  }
+`;

@@ -1,8 +1,28 @@
 import Link from "next/link";
 import styled from "styled-components";
-import EmbedVideo from "../../src/components/Video/EmbedVideo";
+import EmbedVideo from "../../src/components/RegisterVideo/EmbedVideo";
 import { useRouter } from "next/router";
 import DarkModeSwitch from "../../src/components/Menu/components/DarkModeSwitch";
+
+export default function Video() {
+    const router = useRouter();
+    const { url, category } = router.query;
+
+    return (
+        <StyledVideoContainer>
+            <div className="video">
+                <header>
+                    <Link href="/">Go back</Link>
+                    <DarkModeSwitch/>
+                </header>
+                <EmbedVideo url={url} />
+
+                <span>Category:</span>
+                <p>{category}</p>
+            </div>
+        </StyledVideoContainer>
+    );
+}
 
 const StyledVideoContainer = styled.main`
   width: 100%;
@@ -44,23 +64,3 @@ const StyledVideoContainer = styled.main`
     }
   }
 `;
-
-export default function Video() {
-    const router = useRouter();
-    const { url, category } = router.query;
-
-    return (
-        <StyledVideoContainer>
-            <div className="video">
-                <header>
-                    <Link href="/">Go back</Link>
-                    <DarkModeSwitch/>
-                </header>
-                <EmbedVideo url={url} />
-
-                <span>Category:</span>
-                <p>{category}</p>
-            </div>
-        </StyledVideoContainer>
-    );
-}

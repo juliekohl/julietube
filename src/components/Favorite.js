@@ -8,14 +8,12 @@ export default function Favorite (props) {
             {favoriteNames.map((favoriteName) => {
                 const videos = props.favorites[favoriteName];
                 return (
-                    <section>
-                        <h2>
-                            {favoriteName}
-                        </h2>
+                    <section key={favoriteName}>
+                        <h2>{favoriteName}</h2>
                         <div>
                             {videos.map( (video)=>{
                                     return(
-                                        <a href={video.url}>
+                                        <a key={favoriteName.url} href={video.url}>
                                             <img src={video.thumb}/>
                                             <span>{video.title}</span>
                                         </a>

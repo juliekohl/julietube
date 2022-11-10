@@ -9,19 +9,20 @@ function useForm(propsForm) {
         handleChange: (event) => {
             const value = event.target.value;
             const name = event.target.name;
+
             setValues({
                 ...values,
                 [name]: value,
             });
         },
-        clearForm() {
-            setValues({});
-        }
+        clearForm: () => {
+            setValues({ title: "", url: "" });
+        },
     };
 }
 
 export default function RegisterVideo() {
-    const formRegistration = useForm({
+    const { values, handleChange, clearForm } = useForm({
         initialValues: { title: "", url: "" }
     });
     const [ formVisible, setFormVisible ] = React.useState(false);
@@ -29,38 +30,59 @@ export default function RegisterVideo() {
     return (
         <StyledRegisterVideo>
             <button
-                className="add-video"
                 type="button"
+                className="add-video"
                 onClick={() => setFormVisible(true)}
-            >+</button>
+            >
+                +
+            </button>
             {formVisible
                 ? (
                     <form
                         onSubmit={(event) => {
                         event.preventDefault();
-                        console.log(formRegistration.values);
+                        const isCorrectUrl =
+                            /^((https|http):\/\/)?(www\.)?youtube.com\/watch\/\?v=/.test(
+                                values.url
+                            );
 
-                        setFormVisible(false);
-                        formRegistration.clearForm();
+                        if (isCorrectUrl) {
+                            clearForm();
+                            setFormVisible(false);
+                            return
+                        }
+                        alert('url não reconhecida!')
                     }}>
                         <div>
                             <button
+                                type="button"
                                 className="close-modal"
                                 onClick={() => setFormVisible(false)}
-                            >x</button>
+                            >
+                                x
+                            </button>
                             <input
-                                placeholder="Titulo do vídeo"
+                                type="text"
+                                placeholder="Título do video"
                                 name="title"
-                                value={formRegistration.values.title}
-                                onChange={formRegistration.handleChange}
+                                min="1"
+                                max="50"
+                                value={values.title}
+                                onChange={handleChange}
                             />
                             <input
-                                placeholder="URL"
+                                type="text"
+                                placeholder="URL do video"
                                 name="url"
-                                value={formRegistration.values.url}
-                                onChange={formRegistration.handleChange}
+                                min="28"
+                                max="60"
+                                value={values.url}
+                                onChange={handleChange}
                             />
                             <button type="submit">Cadastrar</button>
+                            {values.url.length >= 28 && url.length <= 60 ? (
+                                <img src={values[url].split("v=")[1]} alt="" />
+                            ) : null}
                         </div>
                     </form>
                 )

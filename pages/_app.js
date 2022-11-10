@@ -2,7 +2,7 @@ import React from "react";
 import {CSSReset} from "../src/components/CSSReset";
 import {ThemeProvider} from "styled-components";
 import ColorModeProvider, { ColorModeContext } from "../src/components/Menu/components/ColorMode";
-import RegisterVideo from "../pages/video";
+import RegisterVideo from "../src/components/RegisterVideo/index";
 
 const theme = {
     light: {

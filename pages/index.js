@@ -39,9 +39,6 @@ export default function HomePage() {
             }}>
                 <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
                 <Header />
-                {/*<Timeline searchValue={valorDoFiltro} playlists={config.playlists}>*/}
-                {/*    Conteúdo*/}
-                {/*</Timeline>*/}
                 <Timeline searchValue={valorDoFiltro} playlists={playlists}>
                     Conteúdo
                 </Timeline>

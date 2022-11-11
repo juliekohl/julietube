@@ -1,4 +1,4 @@
-# Julietube: Julie Kohl
+# Julie Kohl presents Julietube!
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/juliekohl/julietube?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/juliekohl/julietube?style=for-the-badge)

@@ -6,18 +6,54 @@ const PROJECT_URL = "https://hovkdjosmlbmcvompmds.supabase.co";
 const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvdmtkam9zbWxibWN2b21wbWRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgxNjY5ODUsImV4cCI6MTk4Mzc0Mjk4NX0.wKdr29kUR4bHUkGxhbYvQdoxMn6FSI2WqclmRns24Qo";
 const supabase = createClient(PROJECT_URL, API_KEY);
 
-function getVideoId(url) {
-    const videoId = url.split("v=")[1];
-    const ampersandPosition = videoId.indexOf("&");
-
-    if (ampersandPosition !== -1) {
-        return videoId.substring(0, ampersandPosition);
+function getVideoId(videoID) {
+    let video_id = "";
+    if (videoID.includes(".be/")) {
+        video_id = videoID.split(".be/")[1];
     }
-    return videoId;
+
+    if (videoID.includes("/embed/")) {
+        video_id = videoID.split("/embed/")[1];
+    }
+
+    if (videoID.includes("com/v/")) {
+        video_id = videoID.split("com/v/")[1];
+    }
+
+    if (videoID.includes("/watch?v=")) {
+        video_id = videoID.split("/watch?v=")[1];
+        let ampersandPosition = video_id.indexOf("&");
+        if (ampersandPosition != -1) {
+            video_id = video_id.substring(0, ampersandPosition);
+        }
+    }
+
+    return video_id;
 }
 
 function getThumbnail(url) {
-    return `https://img.youtube.com/vi/${url.split("v=")[1]}/hqdefault.jpg`;
+    let video_url = "";
+    if (url.includes(".be/")) {
+        video_url = url.split(".be/")[1];
+    }
+
+    if (url.includes("/embed/")) {
+        video_url = url.split("/embed/")[1];
+    }
+
+    if (url.includes("com/v/")) {
+        video_url = url.split("com/v/")[1];
+    }
+
+    if (url.includes("/watch?v=")) {
+        video_url = url.split("/watch?v=")[1];
+        let ampersandPosition = video_url.indexOf("&");
+        if (ampersandPosition != -1) {
+            video_url = video_url.substring(0, ampersandPosition);
+        }
+    }
+
+    return `https://img.youtube.com/vi/${video_url}/hqdefault.jpg`;
 }
 
 function useForm(propsForm) {
@@ -64,7 +100,7 @@ function useForm(propsForm) {
 
 export default function RegisterVideo() {
     const [ formVisible, setFormVisible ] = React.useState(false);
-    const { values, handleChange, clearForm } = useForm({
+    const { values, video_id, handleChange, clearForm } = useForm({
         initialValues: { title: "", url: "" }
     });
 
@@ -83,19 +119,21 @@ export default function RegisterVideo() {
                         onSubmit={(event) => {
                         event.preventDefault();
 
-                        supabase.from("video").insert({
+                        clearForm();
+                        setFormVisible(false);
+
+                        supabase
+                            .from("video")
+                            .insert({
                             title: values.title,
-                            url: values.url,
+                            url: getVideoId(values.url),
                             thumb: getThumbnail(values.url),
-                            playlist: "front-end",
+                            playlist: "Upload do usuário",
                         }).then((response) => {
                             console.log(response);
                         }).catch((err) => {
                             console.log(err);
-                        })
-
-                        clearForm();
-                        setFormVisible(false);
+                        });
                     }}>
                         <div>
                             <button
@@ -109,10 +147,11 @@ export default function RegisterVideo() {
                                 type="text"
                                 placeholder="Título do video"
                                 name="title"
-                                min="5"
-                                max="50"
                                 value={values.title}
                                 onChange={handleChange}
+                                min="5"
+                                max="50"
+                                required
                             />
                             <input
                                 type="text"
@@ -124,8 +163,8 @@ export default function RegisterVideo() {
                                 pattern="^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$"
                             />
                             <button type="submit">Cadastrar</button>
-                            <span>Preview</span>
-                            {values.video_id && (
+
+                            {video_id && (
                                 <>
                                     <div className="wrapperPreview">
                                         <h2>{values.title}</h2>
@@ -133,7 +172,7 @@ export default function RegisterVideo() {
                                             <iframe
                                                 width="410"
                                                 height="220"
-                                                src={`https://www.youtube.com/embed/${values.video_id}`}
+                                                src={`https://www.youtube.com/embed/${video_id}`}
                                                 title="YouTube video player"
                                                 frameBorder="0"
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

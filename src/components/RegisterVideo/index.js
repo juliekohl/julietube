@@ -28,7 +28,7 @@ function getVideoId(videoID) {
         }
     }
 
-    return video_id;
+    return `https://www.youtube.com/watch?v=${video_id}`;
 }
 
 function getThumbnail(url) {

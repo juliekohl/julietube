@@ -93,7 +93,7 @@ function useForm(propsForm) {
             });
         },
         clearForm: () => {
-            setValues({ title: "", url: "" , video_id: "",});
+            setValues({ title: "", url: "" , video_id: "", category: "",},);
         },
     };
 }
@@ -101,7 +101,7 @@ function useForm(propsForm) {
 export default function RegisterVideo() {
     const [ formVisible, setFormVisible ] = React.useState(false);
     const { values, video_id, handleChange, clearForm } = useForm({
-        initialValues: { title: "", url: "" }
+        initialValues: { title: "", url: "", category: "", }
     });
 
     return (
@@ -128,7 +128,7 @@ export default function RegisterVideo() {
                             title: values.title,
                             url: getVideoId(values.url),
                             thumb: getThumbnail(values.url),
-                            playlist: "Upload do usuário",
+                            playlist: values.category,
                         }).then((response) => {
                             console.log(response);
                         }).catch((err) => {
@@ -151,6 +151,16 @@ export default function RegisterVideo() {
                                 onChange={handleChange}
                                 min="5"
                                 max="50"
+                                required
+                            />
+                            <input
+                                type="text"
+                                placeholder="Categoria do video"
+                                name="category"
+                                value={values.category}
+                                onChange={handleChange}
+                                min="5"
+                                max="20"
                                 required
                             />
                             <input
